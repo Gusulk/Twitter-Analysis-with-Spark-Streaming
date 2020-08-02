@@ -19,19 +19,29 @@ api = tweepy.API(auth)
 
 
 class TweetPush(StreamListener):
+
     def __init__(self):
         self.client = pykafka.KafkaClient("localhost:9092")
         self.producer = self.client.topics[bytes("twitter", "ascii")].get_producer()
 
     def on_data(self, raw_data):
         self.producer.produce(bytes(raw_data, "ascii"))
+        #print("------------------------------------")
         return True
 
     def on_error(self, status_code):
         print(status_code)
         return True
 
+    def on_timeout(self):
+        return True
+
 
 twitter_stream = Stream(auth, TweetPush())
 
 twitter_stream.filter(locations=[-73.9872354804, -33.7683777809, -34.7299934555, 5.24448639569], languages=['pt'])
+
+
+#twitter_stream.filter(track=['a'])
+
+

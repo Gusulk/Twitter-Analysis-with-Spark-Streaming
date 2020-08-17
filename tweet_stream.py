@@ -62,7 +62,7 @@ if __name__ == "__main__":
     auth.set_access_token(access_token, access_token_secret)
 
     stream = TweetStream(auth, listener)
-    stream.start([''])
+    stream.start(['covid'])
 
     #languages = ['pt'], locations = [-73.9872354804, -33.7683777809, -34.7299934555, 5.24448639569]
     #languages = ['en'], locations = [-171.791110603, 18.91619, -66.96466, 71.3577635769]
